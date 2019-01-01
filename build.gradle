@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'com.google.protobuf'
+
+version "0.1"
+group "vertx.protobuffer.message.codec"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+    compile 'org.koin:koin-core:1.0.1'
+    compile "io.vertx:vertx-core:$vertxVersion"
+    compile "io.vertx:vertx-hazelcast:$vertxVersion"
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+    testCompile('io.kotlintest:kotlintest-runner-junit5:3.1.8')
+    testCompile("io.strikt:strikt-core:0.17.0")
+    testCompile 'org.koin:koin-test:1.0.2'
+    //protobuf
+    compile "com.google.protobuf:protobuf-java:$protobufVersion"
+    compile "com.google.protobuf:protobuf-java-util:$protobufVersion"
+    if (JavaVersion.current().isJava9Compatible()) {
+        // Workaround for @javax.annotation.Generated
+        // see: https://github.com/grpc/grpc-java/issues/3633
+        compile 'javax.annotation:javax.annotation-api:1.3.1'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileKotlin {
+	kotlinOptions {
+	    jvmTarget = '1.8' 
+	    //Will retain parameter names for Java reflection
+	    javaParameters = true 
+	}
+}
+
+compileTestKotlin {
+	kotlinOptions {
+	    jvmTarget = '1.8' 
+	    javaParameters = true 
+	}
+}
+
+protobuf {
+    protoc {
+        // The artifact spec for the Protobuf Compiler
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+}
+
+
+sourceSets {
+    main.java.srcDirs += file("${protobuf.generatedFilesBaseDir}/main/java")
+}
+
+
+classes.dependsOn {
+    generateProto
+}
