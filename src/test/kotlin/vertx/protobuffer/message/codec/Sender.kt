@@ -2,15 +2,20 @@ package vertx.protobuffer.message.codec
 
 import io.vertx.core.Vertx
 import io.vertx.core.eventbus.EventBus
+import org.koin.log.Logger.SLF4JLogger
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.get
 
-
-fun main(args: Array<String>) {
-    TestModule.start()
-    val eventBus = TestModule.get<EventBus>()
-    TestModule.get<Vertx>().setPeriodic(1000) {
-        eventBus.send(POINTS_TO_VISIT, DUBLIN)
+object Sender : KoinComponent {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        startKoin(listOf(TestModule.vertModule), logger = SLF4JLogger())
+        val eventBus = get<EventBus>()
+        get<Vertx>().setPeriodic(1000) {
+            eventBus.send(POINTS_TO_VISIT, DUBLIN)
+        }
+        Thread.sleep(Long.MAX_VALUE)
     }
-    Thread.sleep(Long.MAX_VALUE)
 }
 

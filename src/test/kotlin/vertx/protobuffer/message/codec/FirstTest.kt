@@ -6,6 +6,8 @@ import io.vertx.core.eventbus.EventBus
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.koin.log.Logger.SLF4JLogger
+import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.get
 import org.koin.test.KoinTest
@@ -14,7 +16,7 @@ import org.koin.test.KoinTest
 class FirstTest : KoinTest {
     @Before
     fun before() {
-        TestModule.start()
+        startKoin(listOf(TestModule.vertModule), logger = SLF4JLogger())
     }
 
     @After

@@ -32,18 +32,17 @@ private fun clusterVertxCreation(): CompletableFuture<Vertx> {
     return future
 }
 
-private val vertModule = module {
-    single { clusterVertxCreation().get() }
-    single(createOnStart = true) {
-        get<Vertx>().eventBus()
-                .apply {
-                    registerCodecFor<Example.GeoPoint>()
-                    registerCodecFor<Example.PhoneNumber>()
-                    registerCodecFor<Example.CurrencyAmount>()
-                }
-    }
-}
 
-object TestModule : KoinComponent {
-    fun start() = startKoin(listOf(vertModule), logger = SLF4JLogger())
+object TestModule {
+    val vertModule = module {
+        single { clusterVertxCreation().get() }
+        single(createOnStart = true) {
+            get<Vertx>().eventBus()
+                    .apply {
+                        registerCodecFor<Example.GeoPoint>()
+                        registerCodecFor<Example.PhoneNumber>()
+                        registerCodecFor<Example.CurrencyAmount>()
+                    }
+        }
+    }
 }
