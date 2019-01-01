@@ -5,8 +5,8 @@ import io.vertx.core.eventbus.EventBus
 import org.koin.standalone.get
 
 fun main(args: Array<String>) {
-    val sender = TestModule()
-    val eventBus = sender.get<EventBus>()
+    TestModule.start()
+    val eventBus = TestModule.get<EventBus>()
     eventBus.consumer<Example.GeoPoint>(POINTS_TO_VISIT) {
         println("Got =====> " + it.body())
     }

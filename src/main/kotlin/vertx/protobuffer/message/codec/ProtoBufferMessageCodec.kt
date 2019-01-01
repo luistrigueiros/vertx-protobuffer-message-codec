@@ -22,6 +22,7 @@ private object ProtoBufferBuilderCreator {
 }
 
 inline fun <reified T : Message> EventBus.registerCodecFor() {
+    logger().info("Register codec for ${T::class.java.name}")
     this.registerDefaultCodec(T::class.java, ProtoBufferMessageCodec(T::class.java))
 }
 

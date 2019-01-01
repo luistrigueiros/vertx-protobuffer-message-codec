@@ -6,7 +6,6 @@ import io.vertx.core.eventbus.EventBus
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.koin.standalone.get
 import org.koin.test.KoinTest
@@ -15,7 +14,7 @@ import org.koin.test.KoinTest
 class FirstTest : KoinTest {
     @Before
     fun before() {
-        startKoin(listOf(vertModule))
+        TestModule.start()
     }
 
     @After
