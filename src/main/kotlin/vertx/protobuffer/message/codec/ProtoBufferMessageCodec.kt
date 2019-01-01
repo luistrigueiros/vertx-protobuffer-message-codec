@@ -15,9 +15,11 @@ private object ProtoBufferBuilderCreator {
     private val methodCache = ConcurrentHashMap<Class<Message>, Method>()
 
     fun getMessageBuilder(clazz: Class<Message>): Message.Builder {
-        return methodCache.computeIfAbsent(clazz) {
+        val method = methodCache.computeIfAbsent(clazz) {
             it.getMethod("newBuilder")
-        }.invoke(clazz) as Message.Builder
+        }
+        val any = method.invoke(clazz)
+        return any as Message.Builder
     }
 }
 

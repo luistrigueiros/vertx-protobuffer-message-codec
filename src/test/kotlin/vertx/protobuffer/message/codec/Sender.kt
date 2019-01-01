@@ -8,8 +8,8 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 
 object Sender : KoinComponent {
-    private val vertx:Vertx by inject()
-    private val eventBus : EventBus by inject()
+    private val vertx: Vertx by inject()
+    private val eventBus: EventBus by inject()
 
     @JvmStatic
     fun main(args: Array<String>) {
