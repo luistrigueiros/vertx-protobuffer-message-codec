@@ -26,14 +26,15 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
     compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
-    compile 'org.koin:koin-core:1.0.1'
     compile "io.vertx:vertx-core:$vertxVersion"
-    compile "io.vertx:vertx-hazelcast:$vertxVersion"
     runtime "ch.qos.logback:logback-classic:1.2.3"
     compile 'org.slf4j:slf4j-api:1.7.25'
     testCompile('io.kotlintest:kotlintest-runner-junit5:3.1.8')
+    testCompile "io.vertx:vertx-hazelcast:$vertxVersion"
     testCompile("io.strikt:strikt-core:0.17.0")
-    testCompile 'org.koin:koin-test:1.0.2'
+    testCompile "org.koin:koin-core:$koinVersion"
+    testCompile "org.koin:koin-test:$koinVersion"
+    testCompile "org.koin:koin-logger-slf4j:$koinVersion"
     //protobuf
     compile "com.google.protobuf:protobuf-java:$protobufVersion"
     compile "com.google.protobuf:protobuf-java-util:$protobufVersion"

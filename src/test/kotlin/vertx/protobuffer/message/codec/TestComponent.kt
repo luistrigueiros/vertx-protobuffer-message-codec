@@ -4,6 +4,7 @@ import com.example.wire.Example
 import io.vertx.core.Vertx
 import io.vertx.core.VertxOptions
 import org.koin.dsl.module.module
+import org.koin.log.Logger.SLF4JLogger
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.StandAloneContext.startKoin
 import java.util.concurrent.CompletableFuture
@@ -44,5 +45,5 @@ private val vertModule = module {
 }
 
 object TestModule : KoinComponent {
-    fun start() = startKoin(listOf(vertModule))
+    fun start() = startKoin(listOf(vertModule), logger = SLF4JLogger())
 }
