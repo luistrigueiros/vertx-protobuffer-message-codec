@@ -30,6 +30,7 @@ dependencies {
     compile "io.vertx:vertx-core:$vertxVersion"
     compile "io.vertx:vertx-hazelcast:$vertxVersion"
     runtime "ch.qos.logback:logback-classic:1.2.3"
+    compile 'org.slf4j:slf4j-api:1.7.25'
     testCompile('io.kotlintest:kotlintest-runner-junit5:3.1.8')
     testCompile("io.strikt:strikt-core:0.17.0")
     testCompile 'org.koin:koin-test:1.0.2'
